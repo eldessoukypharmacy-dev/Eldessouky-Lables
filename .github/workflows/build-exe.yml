@@ -19,8 +19,9 @@ jobs:
       - name: Build EXE
         run: pyinstaller --onefile --windowed --icon=icon.ico --name="صيدلية الدسوقي Labels" main.py
 
-      - name: Upload EXE
-        uses: actions/upload-artifact@v3
-        with:
-          name: صيدلية-الدسوقي-Labels
-          path: dist/*.exe
+     
+- name: Upload EXE
+  uses: actions/upload-artifact@v4
+  with:
+    name: LabelsEXE
+    path: dist/*.exe
