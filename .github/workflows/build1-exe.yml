@@ -1,4 +1,4 @@
-name: Build Labels EXE
+name: Build Eldessouky Labels EXE
 
 on:
   workflow_dispatch:
@@ -7,20 +7,26 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Install Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Install pyinstaller
-        run: pip install pyinstaller
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller
+          pip install pillow
+          pip install customtkinter
 
       - name: Build EXE
-        run: pyinstaller --onefile --windowed --icon=icon.ico --name="صيدلية الدسوقي Labels" main.py
+        run: |
+          pyinstaller --onefile --noconsole main.py --name "Eldessouky-Labels"
 
-      - name: Upload EXE
-        uses: actions/upload-artifact@v3
+      - name: Upload EXE artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: صيدلية-الدسوقي-Labels
-          path: dist/*.exe
+          name: Eldessouky-Labels
+          path: dist/Eldessouky-Labels.exe
