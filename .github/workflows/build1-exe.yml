@@ -21,12 +21,12 @@ jobs:
           pip install pillow
           pip install customtkinter
 
-      - name: Build EXE
+      - name: Build EXE (stable folder mode)
         run: |
-          pyinstaller --onefile --noconsole main.py --name "Eldessouky-Labels"
+          pyinstaller --onedir --noconsole --clean main.py --name "Eldessouky-Labels"
 
-      - name: Upload EXE artifact
+      - name: Upload EXE folder artifact
         uses: actions/upload-artifact@v4
         with:
           name: Eldessouky-Labels
-          path: dist/Eldessouky-Labels.exe
+          path: dist/Eldessouky-Labels/
