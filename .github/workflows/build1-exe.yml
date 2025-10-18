@@ -21,12 +21,14 @@ jobs:
           pip install pillow
           pip install customtkinter
 
-      - name: Build using .spec (safe mode)
+      - name: Build EXE with PyInstaller
         run: |
-          pyinstaller Eldessouky-Labels.spec --clean
+          pyinstaller --onefile --noconsole main.py --name "Eldessouky-Labels" || exit /b 1
+          dir dist
 
-      - name: Upload EXE folder
+      - name: Upload built EXE
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: Eldessouky-Labels
-          path: dist/Eldessouky-Labels/
+          path: dist/Eldessouky-Labels.exe
