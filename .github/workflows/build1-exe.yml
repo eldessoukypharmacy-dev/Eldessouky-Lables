@@ -1,34 +1,36 @@
 name: Build Eldessouky Labels EXE (Win7 Compatible)
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.8 (Win7 compatible)
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.8'
 
       - name: Install dependencies
         run: |
-          pip install pyinstaller==5.13.0
-          pip install pillow
-          pip install customtkinter
+          python -m pip install --upgrade pip
+          pip install pyinstaller==4.10
+          pip install pandas==1.1.5 requests==2.25.1 pillow==8.4.0
+          if exist requirements.txt pip install -r requirements.txt
 
-      - name: Build EXE (compatible with Windows 7)
+      - name: Build EXE (Win7 Compatible)
         run: |
-          pyinstaller --onefile --noconsole main.py --name "Eldessouky-Labels" --clean
-          dir dist
+          pyinstaller --onefile --noconsole main.py --name Eldessouky-Labels
 
-      - name: Upload EXE
-        if: success()
+      - name: Upload built EXE as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Eldessouky-Labels
+          name: Eldessouky-Labels-Win7
           path: dist/Eldessouky-Labels.exe
