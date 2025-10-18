@@ -1,4 +1,4 @@
-name: Build Eldessouky Labels EXE
+name: Build Eldessouky Labels EXE (Win7 Compatible)
 
 on:
   workflow_dispatch:
@@ -10,23 +10,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python 3.9
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.9'
 
       - name: Install dependencies
         run: |
-          pip install pyinstaller
+          pip install pyinstaller==5.13.0
           pip install pillow
           pip install customtkinter
 
-      - name: Build EXE with PyInstaller
+      - name: Build EXE (compatible with Windows 7)
         run: |
-          pyinstaller --onefile --noconsole main.py --name "Eldessouky-Labels" || exit /b 1
+          pyinstaller --onefile --noconsole main.py --name "Eldessouky-Labels" --clean
           dir dist
 
-      - name: Upload built EXE
+      - name: Upload EXE
         if: success()
         uses: actions/upload-artifact@v4
         with:
